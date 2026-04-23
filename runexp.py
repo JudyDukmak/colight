@@ -26,12 +26,12 @@ ANON_PHASE_REPRE=[]
 def parse_args():
     parser = argparse.ArgumentParser()
     # The file folder to create/log in
-    parser.add_argument("--memo", type=str, default='0515_afternoon_Colight_6_6_bi')#1_3,2_2,3_3,4_4
+    parser.add_argument("--memo", type=str, default='Hangzhou_4x4_CoLight')#1_3,2_2,3_3,4_4
     parser.add_argument("--env", type=int, default=1) #env=1 means you will run CityFlow
     parser.add_argument("--gui", type=bool, default=False)
-    parser.add_argument("--road_net", type=str, default='6_6')#'1_2') # which road net you are going to run
-    parser.add_argument("--volume", type=str, default='300')#'300'
-    parser.add_argument("--suffix", type=str, default="0.3_bi")#0.3
+    parser.add_argument("--road_net", type=str, default='4_4')#'1_2') # which road net you are going to run
+    parser.add_argument("--volume", type=str, default='hangzhou')#'300'
+    parser.add_argument("--suffix", type=str, default="real")#0.3
 
     global hangzhou_archive
     hangzhou_archive=False
@@ -40,7 +40,7 @@ def parse_args():
     global TOP_K_ADJACENCY_LANE
     TOP_K_ADJACENCY_LANE=5
     global NUM_ROUNDS
-    NUM_ROUNDS=100
+    NUM_ROUNDS=30
     global EARLY_STOP
     EARLY_STOP=False
     global NEIGHBOR
@@ -57,10 +57,10 @@ def parse_args():
     PRETRAIN=False
     parser.add_argument("--mod", type=str, default='CoLight')#SimpleDQN,SimpleDQNOne,GCN,CoLight,Lit
     parser.add_argument("--cnt",type=int, default=3600)#3600
-    parser.add_argument("--gen",type=int, default=4)#4
+    parser.add_argument("--gen",type=int, default=1)#4
 
     parser.add_argument("-all", action="store_true", default=False)
-    parser.add_argument("--workers",type=int, default=7)
+    parser.add_argument("--workers",type=int, default=4)
     parser.add_argument("--onemodel",type=bool, default=False)
 
     parser.add_argument("--visible_gpu", type=str, default="-1")
