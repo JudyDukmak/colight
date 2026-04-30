@@ -106,3 +106,13 @@ More details about this project are demonstrated in this part.
 
   Define a class of updater for model updating.
 
+-Project Structure
+runexp.py      -> Main launcher / experiment builder
+config.py      -> Global defaults (agents, env, hyperparams)
+pipeline.py    -> Training loop / logging / saving models
+anon_env.py    -> CityFlow environment wrapper
+CoLight_agent.py -> RL algorithm
+records/       -> logs/results
+model/         -> saved models
+data/          -> traffic datasets
+
