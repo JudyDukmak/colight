@@ -11,7 +11,7 @@ import matplotlib
 
 from script import get_traffic_volume
 
-multi_process = True
+multi_process = False
 TOP_K_ADJACENCY=-1
 TOP_K_ADJACENCY_LANE=-1
 PRETRAIN=False
@@ -26,7 +26,7 @@ ANON_PHASE_REPRE=[]
 def parse_args():
     parser = argparse.ArgumentParser()
     # The file folder to create/log in
-    parser.add_argument("--memo", type=str, default='Hangzhou_4x4_CoLight')#1_3,2_2,3_3,4_4
+    parser.add_argument("--memo", type=str, default='exp-4')#1_3,2_2,3_3,4_4
     parser.add_argument("--env", type=int, default=1) #env=1 means you will run CityFlow
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--road_net", type=str, default='4_4')#'1_2') # which road net you are going to run
@@ -40,7 +40,7 @@ def parse_args():
     global TOP_K_ADJACENCY_LANE
     TOP_K_ADJACENCY_LANE=5
     global NUM_ROUNDS
-    NUM_ROUNDS=30
+    NUM_ROUNDS=10
     global EARLY_STOP
     EARLY_STOP=False
     global NEIGHBOR
@@ -57,11 +57,11 @@ def parse_args():
     PRETRAIN=False
     parser.add_argument("--mod", type=str, default='CoLight')#SimpleDQN,SimpleDQNOne,GCN,CoLight,Lit
     parser.add_argument("--cnt",type=int, default=3600)#3600
-    parser.add_argument("--gen",type=int, default=1)#4
+    parser.add_argument("--gen",type=int, default=1)#4    number of generators
 
-    parser.add_argument("-all", action="store_true", default=False)
-    parser.add_argument("--workers",type=int, default=4)
-    parser.add_argument("--onemodel",type=bool, default=False)
+    parser.add_argument("-all", action="store_true", default=False)  #multi traffic files
+    parser.add_argument("--workers",type=int, default=1) #parallel processes
+    parser.add_argument("--onemodel",type=bool, default=False) #shared policy or not
 
     parser.add_argument("--visible_gpu", type=str, default="-1")
     global ANON_PHASE_REPRE
@@ -157,7 +157,7 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
 
     process_list = []
     n_workers = workers     #len(traffic_file_list)
-    multi_process = True
+    multi_process = False
 
     global PRETRAIN
     global NUM_ROUNDS
@@ -253,7 +253,7 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
 
             "LIST_STATE_FEATURE": [
                 "cur_phase",
-                # "time_this_phase",
+                #  "time_this_phase",
                 # "vehicle_position_img",
                 # "vehicle_speed_img",
                 # "vehicle_acceleration_img",
@@ -266,15 +266,15 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
                 # "lane_sum_duration_vehicle_left",
                 # "lane_sum_waiting_time",
                 # "terminal",
-                # "coming_vehicle",
-                # "leaving_vehicle",
-                # "pressure"
+                "coming_vehicle",
+                "leaving_vehicle",
+                "pressure",
 
-                # "adjacency_matrix",
+                "adjacency_matrix",
                 # "lane_queue_length",
                 # "connectivity",
 
-                # adjacency_matrix_lane
+               "adjacency_matrix_lane"
             ],
 
                 "DIC_FEATURE_DIM": dict(
@@ -304,13 +304,13 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
 
             "DIC_REWARD_INFO": {
                 "flickering": 0,#-5,#
-                "sum_lane_queue_length": 0,
+                "sum_lane_queue_length": -0.1,
                 "sum_lane_wait_time": 0,
                 "sum_lane_num_vehicle_left": 0,#-1,#
                 "sum_duration_vehicle_left": 0,
                 "sum_num_vehicle_been_stopped_thres01": 0,
                 "sum_num_vehicle_been_stopped_thres1": -0.25,
-                "pressure": 0  # -0.25
+                "pressure": -0.1  # -0.25
             },
 
             "LANE_NUM": {
@@ -387,7 +387,7 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
                     dic_traffic_env_conf_extra["LIST_STATE_FEATURE"].append(feature+"_"+str(i))
 
         if mod in ['CoLight','GCN','SimpleDQNOne']:
-            dic_traffic_env_conf_extra["NUM_AGENTS"] = 1
+            dic_traffic_env_conf_extra["NUM_AGENTS"] = 1 #(shared policy)
             dic_traffic_env_conf_extra['ONE_MODEL'] = False
             if "adjacency_matrix" not in dic_traffic_env_conf_extra['LIST_STATE_FEATURE'] and \
                 "adjacency_matrix_lane" not in dic_traffic_env_conf_extra['LIST_STATE_FEATURE'] and \

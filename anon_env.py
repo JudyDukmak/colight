@@ -527,7 +527,7 @@ class Intersection:
         dic_feature["vehicle_waiting_time_img"] = None #self._get_lane_vehicle_accumulated_waiting_time(self.list_entering_lanes)
 
         dic_feature["lane_num_vehicle"] = self._get_lane_num_vehicle(self.list_entering_lanes)
-        dic_feature["pressure"] = None # [self._get_pressure()]
+        dic_feature["pressure"] =  [self._get_pressure()]
 
         if self.fast_compute:
             dic_feature["coming_vehicle"] = None
@@ -540,7 +540,7 @@ class Intersection:
 
         dic_feature["lane_num_vehicle_been_stopped_thres01"] = None # self._get_lane_num_vehicle_been_stopped(0.1, self.list_entering_lanes)
         dic_feature["lane_num_vehicle_been_stopped_thres1"] = self._get_lane_num_vehicle_been_stopped(1, self.list_entering_lanes)
-        dic_feature["lane_queue_length"] = None # self._get_lane_queue_length(self.list_entering_lanes)
+        dic_feature["lane_queue_length"] = self._get_lane_queue_length(self.list_entering_lanes)
         dic_feature["lane_num_vehicle_left"] = None
         dic_feature["lane_sum_duration_vehicle_left"] = None
         dic_feature["lane_sum_waiting_time"] = None #self._get_lane_sum_waiting_time(self.list_entering_lanes)
@@ -747,14 +747,14 @@ class Intersection:
         # customize your own reward
         dic_reward = dict()
         dic_reward["flickering"] = None
-        dic_reward["sum_lane_queue_length"] = None
-        dic_reward["sum_lane_wait_time"] = None
+        dic_reward["sum_lane_queue_length"] = np.sum(self.dic_feature["lane_queue_length"])
+        dic_reward["sum_lane_wait_time"] = np.sum(self.dic_feature["lane_sum_waiting_time"])
         dic_reward["sum_lane_num_vehicle_left"] = None
         dic_reward["sum_duration_vehicle_left"] = None
         dic_reward["sum_num_vehicle_been_stopped_thres01"] = None
         dic_reward["sum_num_vehicle_been_stopped_thres1"] = np.sum(self.dic_feature["lane_num_vehicle_been_stopped_thres1"])
 
-        dic_reward['pressure'] = None # np.sum(self.dic_feature["pressure"])
+        dic_reward['pressure'] = np.sum(self.dic_feature["pressure"])
 
         reward = 0
         for r in dic_reward_info:
@@ -797,7 +797,7 @@ class AnonEnv:
 
         cityflow_config = {
             "interval": self.dic_traffic_env_conf["INTERVAL"],
-            "seed": 0,
+            "seed": 999,
             "laneChange": False,
             "dir": self.path_to_work_directory+"/",
             "roadnetFile": self.dic_traffic_env_conf["ROADNET_FILE"],
@@ -1655,9 +1655,3 @@ if __name__ == '__main__':
     env = AnonEnv(path_to_log, dic_path["PATH_TO_WORK_DIRECTORY"], dic_traffic_env_conf)
     env.reset()
     print("finish")
-
-
-
-
-
-
