@@ -1525,7 +1525,7 @@ if __name__ == '__main__':
         "USE_LANE_ADJACENCY": True,
         "TRAFFIC_FILE": "/mnt/RLSignal_general/records/test/anon_3_3_test/anon_3_3_700_1.0.json",
         "THREADNUM": 8,
-        "SAVEREPLAY": False,
+        "SAVEREPLAY": True,
         "RLTRAFFICLIGHT": True,
         "INTERVAL": 1,
         "NUM_INTERSECTIONS": 9,
@@ -1547,7 +1547,7 @@ if __name__ == '__main__':
 
 
 
-            "SAVEREPLAY": False,
+            "SAVEREPLAY": True,
             "NUM_ROW": 4,
             "NUM_COL": 3,
 

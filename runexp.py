@@ -18,7 +18,7 @@ PRETRAIN=False
 NUM_ROUNDS=100
 EARLY_STOP=True 
 NEIGHBOR=False
-SAVEREPLAY=False
+SAVEREPLAY=True
 ADJACENCY_BY_CONNECTION_OR_GEO=False
 hangzhou_archive=True
 ANON_PHASE_REPRE=[]
@@ -28,7 +28,7 @@ def parse_args():
     # The file folder to create/log in
     parser.add_argument("--memo", type=str, default='colight-2')#1_3,2_2,3_3,4_4
     parser.add_argument("--env", type=int, default=1) #env=1 means you will run CityFlow
-    parser.add_argument("--gui", type=bool, default=False)
+    parser.add_argument("--gui", type=bool, default=True)
     parser.add_argument("--road_net", type=str, default='4_4')#'1_2') # which road net you are going to run
     parser.add_argument("--volume", type=str, default='hangzhou')#'300'
     parser.add_argument("--suffix", type=str, default="real")#0.3
@@ -47,7 +47,7 @@ def parse_args():
     # TAKE CARE
     NEIGHBOR=False
     global SAVEREPLAY # if you want to relay your simulation, set it to be True
-    SAVEREPLAY=False
+    SAVEREPLAY=True
     global ADJACENCY_BY_CONNECTION_OR_GEO
     # TAKE CARE
     ADJACENCY_BY_CONNECTION_OR_GEO=False
