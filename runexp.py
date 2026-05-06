@@ -16,7 +16,7 @@ TOP_K_ADJACENCY=-1
 TOP_K_ADJACENCY_LANE=-1
 PRETRAIN=False
 NUM_ROUNDS=100
-EARLY_STOP=False 
+EARLY_STOP=True 
 NEIGHBOR=False
 SAVEREPLAY=False
 ADJACENCY_BY_CONNECTION_OR_GEO=False
@@ -26,7 +26,7 @@ ANON_PHASE_REPRE=[]
 def parse_args():
     parser = argparse.ArgumentParser()
     # The file folder to create/log in
-    parser.add_argument("--memo", type=str, default='exp-4')#1_3,2_2,3_3,4_4
+    parser.add_argument("--memo", type=str, default='colight-2')#1_3,2_2,3_3,4_4
     parser.add_argument("--env", type=int, default=1) #env=1 means you will run CityFlow
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--road_net", type=str, default='4_4')#'1_2') # which road net you are going to run
@@ -40,9 +40,9 @@ def parse_args():
     global TOP_K_ADJACENCY_LANE
     TOP_K_ADJACENCY_LANE=5
     global NUM_ROUNDS
-    NUM_ROUNDS=10
+    NUM_ROUNDS=30
     global EARLY_STOP
-    EARLY_STOP=False
+    EARLY_STOP=True
     global NEIGHBOR
     # TAKE CARE
     NEIGHBOR=False
@@ -266,15 +266,15 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
                 # "lane_sum_duration_vehicle_left",
                 # "lane_sum_waiting_time",
                 # "terminal",
-                "coming_vehicle",
-                "leaving_vehicle",
-                "pressure",
+            #     "coming_vehicle",    in exp-1,2,3,4,5 added these 
+            #     "leaving_vehicle",   **
+            #     "pressure",           **
 
-                "adjacency_matrix",
+               # "adjacency_matrix",    **
                 # "lane_queue_length",
                 # "connectivity",
 
-               "adjacency_matrix_lane"
+              # "adjacency_matrix_lane"   **
             ],
 
                 "DIC_FEATURE_DIM": dict(
@@ -304,13 +304,13 @@ def main(memo, env, road_net, gui, volume, suffix, mod, cnt, gen, r_all, workers
 
             "DIC_REWARD_INFO": {
                 "flickering": 0,#-5,#
-                "sum_lane_queue_length": -0.1,
+                "sum_lane_queue_length": 0,#-0.1
                 "sum_lane_wait_time": 0,
                 "sum_lane_num_vehicle_left": 0,#-1,#
                 "sum_duration_vehicle_left": 0,
                 "sum_num_vehicle_been_stopped_thres01": 0,
                 "sum_num_vehicle_been_stopped_thres1": -0.25,
-                "pressure": -0.1  # -0.25
+                "pressure": 0 #-0.1  # -0.25
             },
 
             "LANE_NUM": {

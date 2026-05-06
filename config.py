@@ -51,7 +51,7 @@ DIC_EXP_CONF = {
     "PRETRAIN_NUM_GENERATORS": 10,
     "AGGREGATE": False,
     "DEBUG": False,
-    "EARLY_STOP": False,
+    "EARLY_STOP": True,
 
     "MULTI_TRAFFIC": False,
     "MULTI_RANDOM": False,
@@ -70,7 +70,7 @@ DIC_LIT_AGENT_CONF = {
     "SEPARATE_MEMORY": True,
     "PRIORITY_SAMPLING": False,
     "UPDATE_Q_BAR_FREQ": 5,
-    "GAMMA": 0.95,
+    "GAMMA": 0.8,
     "GAMMA_PRETRAIN": 0,
     "MAX_MEMORY_LEN": 1000,
     "PATIENCE": 10,
