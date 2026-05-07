@@ -36,25 +36,38 @@ BASE_DIR = args.base_dir
 # Example:
 # records/exp-*/anon_4_4_hangzhou_real.json_*/metrics/colight_metrics.csv
 # ==========================================================
+# ==========================================================
+# SEARCH ALL METRIC FILES
+# ==========================================================
 pattern = os.path.join(
     BASE_DIR,
-    "exp-*",
-    f"anon_{args.road_net}_{args.volume}_{args.suffix}.json_*",
+    "colight-*",
+    "*",
     "metrics",
     "colight_metrics.csv"
 )
 
-csv_files = glob.glob(pattern)
+all_files = glob.glob(pattern)
+
+# optional filtering
+csv_files = [
+    f for f in all_files
+    if "hangzhou" in f
+]
 
 print("=" * 60)
 print("FOUND FILES:")
+
 for f in csv_files:
     print(f)
+
 print("=" * 60)
 
 if len(csv_files) == 0:
     raise ValueError("No metrics CSV files found.")
 
+# create output dir
+os.makedirs(os.path.join(BASE_DIR, "multi_seeds"), exist_ok=True)
 
 # ==========================================================
 # LOAD ALL SEEDS
@@ -65,9 +78,9 @@ for file in csv_files:
 
     df = pd.read_csv(file)
 
-    # extract seed name = exp-1 / exp-2 / exp-3
+    # extract seed name = colight-1 / colight-2 / colight-3
     parts = file.split(os.sep)
-    exp_name = [p for p in parts if p.startswith("exp-")][0]
+    exp_name = [p for p in parts if p.startswith("colight-")][0]
 
     df["seed"] = exp_name
 
