@@ -747,14 +747,14 @@ class Intersection:
         # customize your own reward
         dic_reward = dict()
         dic_reward["flickering"] = None
-        dic_reward["sum_lane_queue_length"] = None   #np.sum(self.dic_feature["lane_queue_length"])    if i want to use queue length, need to implement _get_lane_queue_length
+        dic_reward["sum_lane_queue_length"] = np.sum(self.dic_feature["lane_queue_length"]) #   if i want to use queue length, need to implement _get_lane_queue_length
         dic_reward["sum_lane_wait_time"] = None  #np.sum(self.dic_feature["lane_sum_waiting_time"])
         dic_reward["sum_lane_num_vehicle_left"] = None
         dic_reward["sum_duration_vehicle_left"] = None
         dic_reward["sum_num_vehicle_been_stopped_thres01"] = None
         dic_reward["sum_num_vehicle_been_stopped_thres1"] = np.sum(self.dic_feature["lane_num_vehicle_been_stopped_thres1"])
 
-        dic_reward['pressure'] = None  #np.sum(self.dic_feature["pressure"])
+        dic_reward['pressure'] = np.sum(self.dic_feature["pressure"])
 
         reward = 0
         for r in dic_reward_info:
@@ -797,7 +797,7 @@ class AnonEnv:
 
         cityflow_config = {
             "interval": self.dic_traffic_env_conf["INTERVAL"],
-            "seed": 42,
+            "seed": 999,
             "laneChange": False,
             "dir": self.path_to_work_directory+"/",
             "roadnetFile": self.dic_traffic_env_conf["ROADNET_FILE"],
