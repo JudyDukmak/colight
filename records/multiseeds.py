@@ -41,7 +41,11 @@ BASE_DIR = args.base_dir
 # ==========================================================
 pattern = os.path.join(
     BASE_DIR,
+<<<<<<< HEAD
     "colight-*",
+=======
+    "exp2-*",
+>>>>>>> eba96473f24f42806545335f76ebf2479882f6e9
     "*",
     "metrics",
     "colight_metrics.csv"
@@ -80,7 +84,11 @@ for file in csv_files:
 
     # extract seed name = colight-1 / colight-2 / colight-3
     parts = file.split(os.sep)
+<<<<<<< HEAD
     exp_name = [p for p in parts if p.startswith("colight-")][0]
+=======
+    exp_name = [p for p in parts if p.startswith("exp2-")][0]
+>>>>>>> eba96473f24f42806545335f76ebf2479882f6e9
 
     df["seed"] = exp_name
 
@@ -155,7 +163,6 @@ def plot_band(metric, ylabel, filename):
     y = summary[mean_col]
 
     std = summary[std_col].fillna(0)
-
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, marker="o", label="Mean")
     plt.fill_between(x, y - std, y + std, alpha=0.3, label="± std")

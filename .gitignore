@@ -1,9 +1,2 @@
 .idea/*
 temp.tensorboard/
-colight/temp.tensorboard/
-logs/
-models/
-checkpoints/
-runs/
-*.pt
-*.pth
