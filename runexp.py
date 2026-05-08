@@ -26,11 +26,8 @@ ANON_PHASE_REPRE=[]
 def parse_args():
     parser = argparse.ArgumentParser()
     # The file folder to create/log in
-<<<<<<< HEAD
-    parser.add_argument("--memo", type=str, default='colight-5')#1_3,2_2,3_3,4_4
-=======
+
     parser.add_argument("--memo", type=str, default='exp2-1')#1_3,2_2,3_3,4_4
->>>>>>> eba96473f24f42806545335f76ebf2479882f6e9
     parser.add_argument("--env", type=int, default=1) #env=1 means you will run CityFlow
     parser.add_argument("--gui", type=bool, default=True)
     parser.add_argument("--road_net", type=str, default='4_4')#'1_2') # which road net you are going to run
