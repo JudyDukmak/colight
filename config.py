@@ -316,7 +316,7 @@ DIC_COLIGHT_AGENT_CONF = {
     "EPOCHS": 100,
     "UPDATE_Q_BAR_FREQ": 5,
     "UPDATE_Q_BAR_EVERY_C_ROUND": False,
-    "GAMMA": 0.8,
+    "GAMMA": 0.95,
     "MAX_MEMORY_LEN": 10000,
     "PATIENCE": 10,
     "D_DENSE": 20,

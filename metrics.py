@@ -14,7 +14,7 @@ import seaborn as sns
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--memo", type=str, default='exp-2')
+    parser.add_argument("--memo", type=str, default='exp-50')
     parser.add_argument("--env", type=int, default=1)
     parser.add_argument("--gui", type=bool, default=False)
     parser.add_argument("--road_net", type=str, default='4_4')

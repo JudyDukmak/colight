@@ -797,7 +797,7 @@ class AnonEnv:
 
         cityflow_config = {
             "interval": self.dic_traffic_env_conf["INTERVAL"],
-            "seed": 999,
+            "seed": 0,
             "laneChange": False,
             "dir": self.path_to_work_directory+"/",
             "roadnetFile": self.dic_traffic_env_conf["ROADNET_FILE"],
