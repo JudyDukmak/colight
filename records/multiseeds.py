@@ -41,7 +41,11 @@ BASE_DIR = args.base_dir
 # ==========================================================
 pattern = os.path.join(
     BASE_DIR,
+<<<<<<< HEAD
+    "colight-*",
+=======
     "exp2-*",
+>>>>>>> eba96473f24f42806545335f76ebf2479882f6e9
     "*",
     "metrics",
     "colight_metrics.csv"
@@ -80,7 +84,11 @@ for file in csv_files:
 
     # extract seed name = colight-1 / colight-2 / colight-3
     parts = file.split(os.sep)
+<<<<<<< HEAD
+    exp_name = [p for p in parts if p.startswith("colight-")][0]
+=======
     exp_name = [p for p in parts if p.startswith("exp2-")][0]
+>>>>>>> eba96473f24f42806545335f76ebf2479882f6e9
 
     df["seed"] = exp_name
 

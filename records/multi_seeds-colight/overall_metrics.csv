@@ -1,0 +1,11 @@
+metric,value
+avg_travel_time_mean,421.8028599498823
+avg_travel_time_std,54.12040513419982
+throughput_mean,2780.7600000000007
+throughput_std,113.71986671371205
+avg_waiting_time_mean,239.5442570254556
+avg_waiting_time_std,164.16757014104576
+avg_queue_length_mean,7.8604741379310346
+avg_queue_length_std,2.6462646632374356
+unfinished_mean,142.32666666666665
+unfinished_std,58.27356938486089

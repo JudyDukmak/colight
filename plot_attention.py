@@ -4,67 +4,89 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# ================= CONFIG =================
-EXP_NAME= "colight-1"
-BASE_PATH = f"records/{EXP_NAME}/anon_4_4_hangzhou_real.json_04_22_19_21_38/test_round"
-ROUND = 1
-SAVE_DIR = f"records/{EXP_NAME}/Attention_plots"
+# ==================================================
+# CONFIG
+# ==================================================
+
+EXP_NAME = "exp2-4"
+
+BASE_PATH = f"records/{EXP_NAME}/anon_4_4_hangzhou_real.json_05_07_08_03_10/test_round"
+
+ROUND = 29
+
+SAVE_DIR = os.path.join(
+    f"records/{EXP_NAME}",
+    "Attention_plots"
+)
 
 os.makedirs(SAVE_DIR, exist_ok=True)
 
-# ================= LOAD =================                                          360 → time steps in the episode
-def load_attention(round_id):
-    path = os.path.join(BASE_PATH, f"round_{round_id}", "attention.pkl")            #attention[layer][agent][head][neighbor]
-    data = pickle.load(open(path, "rb"))
-    data_list = [data[k] for k in sorted(data.keys())]
-    return np.array(data_list)
+# ==================================================
+# LOAD ATTENTION
+# ==================================================
 
-att = load_attention(ROUND)
+attention_path = os.path.join(
+    BASE_PATH,
+    f"round_{ROUND}",
+    "attention.pkl"
+)
 
-# ================= GLOBAL HEATMAP =================
-heatmap = att.mean(axis=(0,1,3))
+data = pickle.load(open(attention_path, "rb"))
 
-directions = ["Self", "N", "S", "E", "W"]
+# sort by timestep
+data_list = [data[k] for k in sorted(data.keys())]
+
+# shape:
+# (time, layer, agent, head, neighbor)
+att = np.array(data_list)
+
+print("Attention shape:", att.shape)
+
+# ==================================================
+# GLOBAL ATTENTION HEATMAP
+# ==================================================
+
+# Average over:
+# time
+# layer
+# attention head
+
+global_attention = att.mean(axis=(0, 1, 3))
+
+# Result:
+# (16 agents, 5 neighbors)
 
 plt.figure(figsize=(12, 10))
-sns.heatmap(heatmap, cmap="viridis", xticklabels=directions)
 
-plt.title("Global Attention")
-plt.xlabel("Direction")
-plt.ylabel("Intersection")
+sns.heatmap(
+    global_attention,
+    cmap="viridis",
+    annot=False,
+    square=False,
+    cbar=True
+)
 
-plt.savefig(os.path.join(SAVE_DIR, f"global_attention_round_{ROUND}.png"), dpi=300)
+plt.title(
+    f"CoLight Global Attention Heatmap\nRound {ROUND}",
+    fontsize=16
+)
+
+plt.xlabel("Neighbor Index", fontsize=12)
+plt.ylabel("Intersection (Agent)", fontsize=12)
+
+save_path = os.path.join(
+    SAVE_DIR,
+    f"global_attention_round_{ROUND}.png"
+)
+
+plt.tight_layout()
+
+plt.savefig(
+    save_path,
+    dpi=300,
+    bbox_inches="tight"
+)
+
 plt.close()
 
-# ================= PER AGENT =================
-per_agent = att.mean(axis=(0,1,3,4))
-
-plt.figure()
-plt.bar(range(len(per_agent)), per_agent)
-
-plt.title("Attention per Intersection")
-plt.savefig(os.path.join(SAVE_DIR, "attention_per_agent.png"), dpi=300)
-plt.close()
-
-# ================= TIME =================
-time_curve = att.mean(axis=(1,2,3,4))
-
-plt.figure()
-plt.plot(time_curve)
-
-plt.title("Attention Over Time")
-plt.savefig(os.path.join(SAVE_DIR, "attention_time.png"), dpi=300)
-plt.close()
-
-# ================= LEARNING CURVE =================
-rounds = [1, 10, 20, 29]
-values = []
-
-for r in rounds:
-    att = load_attention(r)
-    values.append(att.mean())
-
-plt.plot(rounds, values, marker='o')
-plt.title("Learning Curve")
-plt.savefig(os.path.join(SAVE_DIR, "learning_curve.png"), dpi=300)
-plt.close()
+print("Saved to:", save_path)
