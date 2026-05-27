@@ -8,11 +8,11 @@ import os
 # CONFIG
 # ==================================================
 
-EXP_NAME = "exp-50"
+EXP_NAME = "colight-50"
 
-BASE_PATH = f"records/{EXP_NAME}/anon_4_4_hangzhou_real.json_05_09_06_04_25/test_round"
+BASE_PATH = f"records/{EXP_NAME}/anon_4_4_hangzhou_real.json_05_09_21_29_11/test_round"
 
-ROUND = 49
+ROUND = 29
 
 SAVE_DIR = os.path.join(
     f"records/{EXP_NAME}",
