@@ -1604,7 +1604,7 @@ if __name__ == '__main__':
 
             "DIC_REWARD_INFO": {
                 "flickering": 0,
-                "sum_lane_queue_length": 0,
+                "sum_lane_queue_length": 0,#-0.25
                 "sum_lane_wait_time": 0,
                 "sum_lane_num_vehicle_left": 0,
                 "sum_duration_vehicle_left": 0,
